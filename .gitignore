@@ -336,3 +336,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+Web.config
+App_Start
