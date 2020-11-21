@@ -64,3 +64,49 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<ul class="list-unstyled">
+    @foreach (var review in Model.Reviews)
+    {
+
+        <li>
+
+            <div class="row">
+                <div class="col-md-10">
+                    
+                    <b>@review.Rating / 5</b>
+                    <p class="text">@review.Comment</p>
+                    <h6 class="text-info">Data: @review.Date</h6>
+                </div>
+                <div class="col-md-2">
+                    <div style="display: inline-block; float : left; margin-right: 15px">
+                        <a class="glyphicon glyphicon-pencil" href="/Reviews/Edit/@review.ID"></a>
+                    </div>
+                    <form method="post" action="/Reviews/Delete/@review.ID">
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                    </form>
+                </div>
+
+            </div>
+        </li>
+    }
+</ul>
+
+<form method="post" action="/Reviews/Create">
+
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <h4>Adauga un Comentariu</h4>
+        <hr />
+        <input type="hidden" name="ProductID" value="@Model.ID" />
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Rating">Rating (1-5)</label>
+            <input type="number" name="Rating" /><br /><br />
+            <label class="control-label col-md-2" for="Comment">Continut comentariu</label>
+            <textarea class="form-control" name="Comment"></textarea>
+            <button class="btn btn-success " type="submit">Adauga comentariu</button>
+        </div>
+    </div>
+   
+</form>
+
