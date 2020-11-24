@@ -14,32 +14,8 @@ namespace Shopping_Site.Controllers
     {
         private Models.AppContext db = new Models.AppContext();
 
-        // GET: Reviews
-        public ActionResult Index()
-        {
-            return View(db.Reviews.ToList());
-        }
 
-        // GET: Reviews/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return HttpNotFound();
-            }
-            return View(review);
-        }
 
-        // GET: Reviews/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
         // POST: Reviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
