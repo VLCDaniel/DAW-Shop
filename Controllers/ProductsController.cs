@@ -17,7 +17,7 @@ namespace Shopping_Site.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            return View(db.Products.Where(p=>p.IsApproved).ToList());
         }
 
         // GET: Product/Details/5
@@ -38,6 +38,7 @@ namespace Shopping_Site.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
+            ViewBag.Categorii = db.Categories;
             return View();
         }
 
@@ -46,8 +47,10 @@ namespace Shopping_Site.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,RegisteredOn,Description,Count,IsApproved,Price")] Product product)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,Count,Price,CategoryId")] Product product)
         {
+            product.IsApproved = false;
+            product.RegisteredOn = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -123,5 +126,21 @@ namespace Shopping_Site.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Valideaza()
+        {
+            return View(db.Products.Where(p=>p.IsApproved!=true).ToList());
+        }
+        [HttpPost]
+        public ActionResult Valideaza(int? id)
+        {
+            if (id == null)
+                return null;
+            var prod = db.Products.Find(id);
+            prod.IsApproved = true;
+            db.SaveChanges();
+            return RedirectToAction("Valideaza");
+        }
+
     }
 }
