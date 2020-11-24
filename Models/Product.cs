@@ -18,6 +18,9 @@ namespace Shopping_Site.Models
         public bool IsApproved { get; set; }
         public int Price { get; set; }
 
+        [Required(ErrorMessage = "Categoria este obligatorie")]
+        public int CategoryId { get; set; }
+
         public virtual ICollection<Review> Reviews { get; set; }
     }
 }

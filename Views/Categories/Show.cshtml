@@ -13,7 +13,18 @@
     <div class="panel-body">
         Lista articole
         <br />
+        <ul>
+            @foreach (var prod in ViewBag.Produse)
+            {
+                <li>
+                    <div>
+                        <h4><a href="/Products/Details/@prod.ID">@prod.Name</a></h4>
+                        <p class="info">@prod.Description</p>
+                    </div>
+                </li>
 
+            }
+        </ul>
         <a class="btn btn-success pull-left" href="/Categories/Edit/@Model.CategoryId">Modifica categorie</a>
 
         <form method="post" action="/Categories/Delete/@Model.CategoryId">

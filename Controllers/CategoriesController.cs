@@ -26,6 +26,7 @@ namespace Shopping_Site.Controllers
         public ActionResult Show(int id)
         {
             Models.Category category = db.Categories.Find(id);
+            ViewBag.Produse = db.Products.Where(p => p.CategoryId == id);
             return View(category);
         }
 
