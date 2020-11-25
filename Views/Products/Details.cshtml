@@ -4,6 +4,7 @@
     ViewBag.Title = "Details";
 }
 
+<h1>@TempData["Message"]</h1>
 <h2>Details</h2>
 
 <div>
@@ -101,7 +102,7 @@
         <input type="hidden" name="ProductID" value="@Model.ID" />
         <div class="form-group">
             <label class="control-label col-md-2" for="Rating">Rating (1-5)</label>
-            <input type="number" name="Rating" /><br /><br />
+            @* <input type="number" name="Rating" /><br /><br />*@
             <label class="control-label col-md-2" for="Comment">Continut comentariu</label>
             <textarea class="form-control" name="Comment"></textarea>
             <button class="btn btn-success " type="submit">Adauga comentariu</button>
