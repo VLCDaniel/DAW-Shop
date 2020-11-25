@@ -32,7 +32,7 @@ namespace Shopping_Site.Controllers
                 return Redirect("/Products/Details/" + review.ProductID);
             }
 
-            return View(review);
+            return Redirect("/Products/Details/" + review.ProductID);
         }
 
         // GET: Reviews/Edit/5

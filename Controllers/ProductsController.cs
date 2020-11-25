@@ -17,6 +17,10 @@ namespace Shopping_Site.Controllers
         // GET: Product
         public ActionResult Index()
         {
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+            }
             return View(db.Products.Where(p=>p.IsApproved).ToList());
         }
 
@@ -55,6 +59,7 @@ namespace Shopping_Site.Controllers
             {
                 db.Products.Add(product);
                 db.SaveChanges();
+                TempData["message"] = "Produsul asteapta sa fie validat!";
                 return RedirectToAction("Index");
             }
 
@@ -69,27 +74,40 @@ namespace Shopping_Site.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = db.Products.Find(id);
+            ViewBag.Categorii = db.Categories;
             if (product == null)
             {
                 return HttpNotFound();
             }
+            TempData["message"] = "Produsul a fost editat!";
             return View(product);
         }
 
         // POST: Product/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,RegisteredOn,Description,Count,IsApproved,Price")] Product product)
+        public ActionResult Edit(Product product)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Product prod = db.Products.Find(product.ID);
+                if(TryUpdateModel(prod))
+                {
+                    prod.Name = product.Name;
+                    prod.Price = product.Price;
+                    prod.IsApproved = product.IsApproved;
+                    prod.Description = product.Description;
+                    prod.Count = product.Count;
+                    prod.CategoryId = product.CategoryId;
+                    db.SaveChanges();
+                }
+                TempData["message"] = "Produsul a fost editat!";
+                return Redirect("/Products/Details/" + prod.ID);
             }
-            return View(product);
+            catch (Exception e)
+            {
+                return View();
+            }
         }
 
         // GET: Product/Delete/5
@@ -115,6 +133,7 @@ namespace Shopping_Site.Controllers
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
+            TempData["message"] = "Produsul a fost sters!";
             return RedirectToAction("Index");
         }
 
@@ -129,6 +148,7 @@ namespace Shopping_Site.Controllers
 
         public ActionResult Valideaza()
         {
+            TempData["message"] = "Produsul a fost validat!";
             return View(db.Products.Where(p=>p.IsApproved!=true).ToList());
         }
         [HttpPost]
