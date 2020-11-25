@@ -75,7 +75,7 @@ namespace Shopping_Site.Controllers
                     category.CategoryName = requestCategory.CategoryName;
                     db.SaveChanges();
                     TempData["message"] = "Categoria a fost editata cu succes!";
-                    return RedirectToAction("INdex");
+                    return RedirectToAction("Index");
                 }
                 return View(requestCategory);
             }
