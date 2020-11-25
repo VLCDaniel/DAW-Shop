@@ -5,75 +5,67 @@
 }
 
 <h1>@TempData["Message"]</h1>
-<h2>Details</h2>
+<h3>Details</h3>
 
 <div>
-    <h4>Product</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
-        </dt>
+    <h1>
+        @Html.DisplayFor(model => model.Name)
 
-        <dd>
-            @Html.DisplayFor(model => model.RegisteredOn)
-        </dd>
+    </h1>
+    <div style="font-size:2em; float:right">
+        <a class="glyphicon glyphicon-pencil" href="/Reviews/Edit/@Model.ID"></a>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+        <form method="post" action="/Reviews/Delete/@Model.ID" style="display:inline-block">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+        </form>
+    </div>
 
-        <dd>
+    <p class="text-info">
+        @Html.DisplayNameFor(model => model.RegisteredOn): @Html.DisplayFor(model => model.RegisteredOn)
+
+    </p>
+
+    <div class="col-md-10">
+        <h3>
+            Descriere
+        </h3>
+
+        <p style="font-size:1.1em">
             @Html.DisplayFor(model => model.Description)
-        </dd>
+        </p>
+    </div>
+    <div class="col-md-2 text-center">
+        <h3  style="color:darkred">
+            @Html.DisplayFor(model => model.Price) Lei
+        </h3>
 
-       @* <dt>
-            @Html.DisplayNameFor(model => model.Count)
-        </dt>
+        <button class="btn btn-primary">
+            Adauga in cos
+        </button>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Count)
-        </dd>*@
 
-       @* <dt>
-            @Html.DisplayNameFor(model => model.IsApproved)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsApproved)
-        </dd>*@
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<br />
+<br />
+<h3>Recenzii</h3>
 <ul class="list-unstyled">
     @foreach (var review in Model.Reviews)
     {
 
         <li>
-
-            <div class="row">
+            <hr />
+            <div class="row" >
                 <div class="col-md-10">
-                    
+
                     <b>@review.Rating / 5</b>
                     <p class="text">@review.Comment</p>
                     <h6 class="text-info">Data: @review.Date</h6>
@@ -102,12 +94,12 @@
         <input type="hidden" name="ProductID" value="@Model.ID" />
         <div class="form-group">
             <label class="control-label col-md-2" for="Rating">Rating (1-5)</label>
-            @* <input type="number" name="Rating" /><br /><br />*@
+            <input type="number" name="Rating" min="1" max="5" /><br /><br />
             <label class="control-label col-md-2" for="Comment">Continut comentariu</label>
             <textarea class="form-control" name="Comment"></textarea>
             <button class="btn btn-success " type="submit">Adauga comentariu</button>
         </div>
     </div>
-   
+
 </form>
 
