@@ -42,9 +42,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="/Products/Show/@Model.ProductID">Inapoi la produs</a>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

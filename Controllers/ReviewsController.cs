@@ -14,25 +14,19 @@ namespace Shopping_Site.Controllers
     {
         private Models.AppContext db = new Models.AppContext();
 
-
-
-
-        // POST: Reviews/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Review review)
+        public ActionResult New(Review review)
         {
             if (ModelState.IsValid)
             {
                 review.Date = DateTime.Now;
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                return Redirect("/Products/Details/" + review.ProductID);
+                return Redirect("/Products/Show/" + review.ProductID);
             }
 
-            return Redirect("/Products/Details/" + review.ProductID);
+            return Redirect("/Products/Show/" + review.ProductID);
         }
 
         // GET: Reviews/Edit/5
@@ -50,20 +44,10 @@ namespace Shopping_Site.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Review review)
         {
-            /*if (ModelState.IsValid)
-            {
-                db.Entry(review).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(review);*/
             try
             {
                 Review comm = db.Reviews.Find(review.ID);
@@ -72,7 +56,7 @@ namespace Shopping_Site.Controllers
                     comm.Comment = review.Comment;
                     db.SaveChanges();
                 }
-                return Redirect("/Products/Details/" + comm.ProductID);
+                return Redirect("/Products/Show/" + comm.ProductID);
             }
             catch (Exception e)
             {
@@ -105,7 +89,7 @@ namespace Shopping_Site.Controllers
             Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect("/Products");
         }
 
         protected override void Dispose(bool disposing)

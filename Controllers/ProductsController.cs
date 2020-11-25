@@ -14,7 +14,6 @@ namespace Shopping_Site.Controllers
     {
         private Models.AppContext db = new Models.AppContext();
 
-        // GET: Product
         public ActionResult Index()
         {
             if (TempData.ContainsKey("message"))
@@ -24,8 +23,7 @@ namespace Shopping_Site.Controllers
             return View(db.Products.Where(p=>p.IsApproved).ToList());
         }
 
-        // GET: Product/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Show(int? id)
         {
             if (id == null)
             {
@@ -39,19 +37,15 @@ namespace Shopping_Site.Controllers
             return View(product);
         }
 
-        // GET: Product/Create
-        public ActionResult Create()
+        public ActionResult New()
         {
             ViewBag.Categorii = db.Categories;
             return View();
         }
 
-        // POST: Product/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Count,Price,CategoryId")] Product product)
+        public ActionResult New(Product product)
         {
             product.IsApproved = false;
             product.RegisteredOn = DateTime.Now;
@@ -66,7 +60,6 @@ namespace Shopping_Site.Controllers
             return View(product);
         }
 
-        // GET: Product/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,7 +76,6 @@ namespace Shopping_Site.Controllers
             return View(product);
         }
 
-        // POST: Product/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Product product)
@@ -102,7 +94,7 @@ namespace Shopping_Site.Controllers
                     db.SaveChanges();
                 }
                 TempData["message"] = "Produsul a fost editat!";
-                return Redirect("/Products/Details/" + prod.ID);
+                return Redirect("/Products/Show/" + prod.ID);
             }
             catch (Exception e)
             {
@@ -110,7 +102,6 @@ namespace Shopping_Site.Controllers
             }
         }
 
-        // GET: Product/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,7 +116,6 @@ namespace Shopping_Site.Controllers
             return View(product);
         }
 
-        // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
