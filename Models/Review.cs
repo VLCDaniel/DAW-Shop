@@ -7,9 +7,9 @@ namespace Shopping_Site.Models
     {
         [Key]
         public int ID { get; set; }
-        [Range(0,5)][Required]
+        [Range(0,5)][Required(ErrorMessage = "Rating-ul produsului este obligatoriu!")]
         public short Rating { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Comentariul este obligatoriu!")]
         public string Comment { get; set; }
 
         public int ProductID { get; set; }

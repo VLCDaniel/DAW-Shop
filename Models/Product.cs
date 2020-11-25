@@ -10,12 +10,15 @@ namespace Shopping_Site.Models
     {
         [Key]
         public int ID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Numele este obligatoriu!")]
         public string Name { get; set; }
         public DateTime RegisteredOn { get; set; }
+        [Required(ErrorMessage = "Descrierea produsului este obligatorie!")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Numarul produselor este obligatoriu!")]
         public int Count { get; set; }
         public bool IsApproved { get; set; }
+        [Required(ErrorMessage = "Pretul este obligatoriu!")]
         public int Price { get; set; }
 
         [Required(ErrorMessage = "Categoria este obligatorie")]

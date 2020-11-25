@@ -10,7 +10,7 @@ namespace Shopping_Site.Models
     {
         [Key]
         public int CategoryId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Numele categoriei este obligatoriu!")]
         public string CategoryName { get; set; }
 
         public virtual ICollection<Product> Product { get; set; }
