@@ -15,7 +15,6 @@ namespace Shopping_Site.Controllers
         private Models.AppContext db = new Models.AppContext();
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult New(Review review)
         {
             if (ModelState.IsValid)
@@ -45,7 +44,6 @@ namespace Shopping_Site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(Review review)
         {
             try
@@ -83,7 +81,7 @@ namespace Shopping_Site.Controllers
 
         // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult DeleteConfirmed(int id)
         {
             Review review = db.Reviews.Find(id);
@@ -92,13 +90,5 @@ namespace Shopping_Site.Controllers
             return Redirect("/Products");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

@@ -44,7 +44,6 @@ namespace Shopping_Site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult New(Product product)
         {
             product.IsApproved = false;
@@ -77,7 +76,7 @@ namespace Shopping_Site.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult Edit(Product product)
         {
             try
@@ -117,7 +116,7 @@ namespace Shopping_Site.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
@@ -125,15 +124,6 @@ namespace Shopping_Site.Controllers
             db.SaveChanges();
             TempData["message"] = "Produsul a fost sters!";
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         public ActionResult Valideaza()
