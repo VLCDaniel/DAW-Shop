@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Finalizare Comanda";
+}
+
+<h2>Finalizeaza Comanda</h2>
+
+<div class="container">
+    <form method="post" action="finishOrder/@ViewBag.OrderID"> 
+@*        <input type="hidden" value="@ViewBag.OrderID" name="OrderID" />*@        
+            <div class="form-group">
+            <label for="adress">Adresa</label>
+            <input type="text" name="adress" id="adress" class="form-control" placeholder="Intoduceti adresa de livrare"/>
+        </div>
+        <button type="submit" class="btn btn-success">Plaseaza Comanda</button>
+    </form>
+</div>

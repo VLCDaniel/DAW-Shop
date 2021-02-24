@@ -1,0 +1,43 @@
+﻿@model Shopping_Site.Models.Order
+@{
+    ViewBag.Title = "Show";
+    var pretTotal = 0;
+
+}
+<br />
+<a class="btn btn-default" href="/Orders/allOrders"><i class="glyphicon glyphicon-arrow-left"></i>  Inapoi la comenzi</a>
+
+<h2>Order Number : @Model.ID</h2>
+<table class="table">
+    <thead>
+    <th>Produs</th>
+    <th>Pret</th>
+    <th>Cantitate</th>
+    </thead>
+
+    @foreach (var product in Model.Products)
+    {
+        <tr>
+            <td><img src="~/Files/@product.Product.FileName" width="140" height="140" style="display:inline-block" />   <b>@product.Product.Name</b></td>
+            <td>@product.Product.Price</td>
+            <td>@product.Ammount</td>
+
+        </tr>
+        {
+            pretTotal = pretTotal + (int)product.Price * product.Ammount;
+        }
+    }
+
+</table>
+<div class="adress">
+    <p class="text-info">Adress: @Model.Shipping_Address</p>
+    <p class="text-info">Data Plasare: @Model.Order_Date</p>
+    <p class="text-info">Data Livrare: @Model.Shipping_Date</p>
+
+</div>
+<div class="price">
+    <h3>Pret total: <span class="price-number">@pretTotal Lei</span> </h3>
+    <br />
+
+</div>
+

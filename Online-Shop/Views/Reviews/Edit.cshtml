@@ -1,0 +1,101 @@
+﻿@model Shopping_Site.Models.Review
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    .stars {
+        display: flex;
+    }
+
+    li > .glyphicon {
+        font-size: 2.2em;
+        color: rgb(160, 160, 160);
+        cursor: pointer;
+    }
+    @*.form-group:first-child{
+        display:flex
+    }*@
+    input[type="number"] {
+        display: none;
+    }
+
+    .control-label {
+        padding-left: 0
+    }
+</style>
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="form-horizontal">
+        <h4>Review</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.Date)
+        <div class="form-group" style="display:flex">
+            @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
+            <input type="number" name="Rating" min="1" max="5" id="ratingSelector" /><br /><br />
+            <ul class="stars list-unstyled" style="margin-left:15px">
+                <li>
+                    <i class="glyphicon glyphicon-star"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star"></i>
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/Products/Show/@Model.ProductID">Inapoi la produs</a>
+</div>
+
+<script>
+    let stars = document.getElementsByClassName("glyphicon-star");
+    let ratingSelector = document.getElementById("ratingSelector");
+    for (let i of stars) {
+        i.addEventListener("click", () => {
+            let indexStar = 0;
+            for (let j of stars) j.style.color = "rgb(160, 160, 160)";
+            for (let j of stars) {
+                indexStar++;
+                ratingSelector.value = indexStar;
+                j.style.color = "#f9bf3b";
+                if (j == i) {
+                    break;
+                }
+            }
+        });
+    }
+</script>

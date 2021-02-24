@@ -1,0 +1,26 @@
+﻿@model Shopping_Site.Models.Category
+
+<div class="row col-md-6" style="margin-top:1em">
+    <form method="post" action="/Categories/Edit/@Model.CategoryId">
+
+        @Html.HttpMethodOverride(HttpVerbs.Put)
+
+        @Html.Hidden("CategoryId")
+
+        @Html.Label("CategoryName", "Titlu Categorie")
+        <br />
+        @Html.EditorFor(m => m.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+
+
+        <br />
+
+
+        <button class="btn btn-success" type="submit">Modifica categorie</button>
+    </form>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

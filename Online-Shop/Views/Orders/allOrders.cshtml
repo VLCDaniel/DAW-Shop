@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Shopping_Site.Models.Order>
+
+@{
+    ViewBag.Title = "allOrders";
+}
+<style>
+    th, td {
+        padding: 1em;
+    }
+</style>
+<h2>Comenzile mele</h2>
+<table class="table table-hover">
+    <thead>
+    <th>Numar comanda</th>
+    <th>Data Comanda</th>
+    </thead>
+    <tbody>
+
+        @foreach (var order in Model)
+        {
+            
+                <tr>
+                    <td>
+                        <a href="/Orders/Show/@order.ID">
+                            Order : @order.ID
+                        </a>
+                    </td>
+                    <td>
+                        @order.Order_Date
+                    </td>
+                </tr>
+            
+        }
+
+    </tbody>
+</table>
+
+

@@ -1,0 +1,158 @@
+﻿@*//@model IEnumerable<Shopping_Site.Models.Product>*@
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .panel > h3 {
+        white-space: nowrap;
+        overflow: hidden;
+
+        text-overflow:ellipsis;
+            font-size:14px;
+    }
+</style>
+@if (TempData.ContainsKey("message"))
+{
+    <div class="alert alert-success" role="alert">
+        <h1>@ViewBag.Message</h1>
+    </div>
+}
+
+@if (ViewBag.afisareButoane == true)
+{
+    <br />
+    <p>
+        @*@Html.ActionLink("Adauga Produs", "New")*@
+        <a href="Products/New"class="btn btn-success">Adauga Produs <i class="glyphicon glyphicon-plus" ></i></a>
+    </p>
+}
+
+<div class="container">
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <form class="card card-sm" method="GET">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col">
+                        <i class="fas fa-search h4 text-body"></i>
+                    </div>
+                    <!--end of col-->
+                    <div class="col-md-8 form-group" style="padding-left:0">
+                        <input class="form-control form-control form-controlborderless" type="text" name="search"
+                               value="@ViewBag.SearchString"
+                               placeholder="Search topics or keywords">
+                    </div>
+                    <!--end of col-->
+                    <div class="form-check col-md-3">
+                        <select class="custom-select form-control" name="filter">
+                            <option selected>Filtreaza</option>
+                            <option value="1" @(ViewBag.Selected1)>Crescator dupa pret</option>
+                            <option value="2" @(ViewBag.Selected2)>Descrescator dupa pret</option>
+                            <option value="3" @(ViewBag.Selected3)>Crescator dupa rating</option>
+                            <option value="4" @(ViewBag.Selected4)>Descrescator dupa rating</option>
+                        </select>
+                    </div>
+
+                    <div class="col-auto">
+                        <button class="btn btn-success"
+                                type="submit">
+                            Search
+                        </button>
+                    </div>
+                    <!--end of col-->
+                </div>
+            </form>
+        </div>
+        <!--end of col-->
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<br />
+
+<div class="container">
+
+    @foreach (var item in ViewBag.Products)
+    {
+        <div class="panel panel-default col-md-3 text-center">
+            <h3 class="" style="font-weight:bolder" alt="@item.Name">
+                @item.Name
+            </h3>
+
+            <img src="~/Files/@item.FileName" width="170" height="170" style="display:inline-block" />
+            <h4 class="center-block" style="text-align:center;color:darkred">
+                @item.Price Lei
+            </h4>
+            <h6>
+                Stoc: @item.Count
+            </h6>
+
+            @if (ViewBag.afisareButoane == true && item.UserID == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+            {
+                @*<ul class="list-unstyled text-center">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Show", "Show", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </ul>*@
+                <a href='@Url.Action("Show", "Products", new { id = item.ID })' class="btn btn-default">Vizualizeaza Produs <i class="glyphicon glyphicon-arrow-right"></i></a>
+            }
+            else
+            {
+                @Html.ActionLink("Show", "Show", new { id = item.ID })
+            }
+        </div>
+        @*<div class="col-md-1">
+        </div>*@
+    }
+</div>
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                @if (ViewBag.search != "")
+                {
+                    <a href="/Products/Index?page=1&search=@(ViewBag.SearchString)&filter=@(ViewBag.FilterString)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="/Products/Index?page=1&filter=@(ViewBag.FilterString)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                }
+            </li>
+
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                if (ViewBag.search != "")
+                {
+                    <li>
+                        <a href="/Products/Index?page=@i&search=@(ViewBag.SearchString)&filter=@(ViewBag.FilterString)">
+                            @(i)
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li><a href="/Products/Index?page=@(i)&filter=@(ViewBag.FilterString)">@(i)</a></li>
+                }
+            }
+
+        <li>
+            @if (ViewBag.search != "")
+            {
+                <a href="/Products/Index?page=@(ViewBag.lastPage)&search=@(ViewBag.SearchString)&filter=@(ViewBag.FilterString)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            }
+            else
+            {
+                <a href="/Products/Index?page=@(ViewBag.lastPage)&filter=@(ViewBag.FilterString)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            }
+        </li>
+        </ul>
+    </nav>
+</div>

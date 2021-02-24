@@ -1,0 +1,63 @@
+﻿@model Shopping_Site.Models.Product
+
+@{
+    ViewBag.Title = "Stergere produs";
+}
+
+<h3>Sunteti sigur ca doriti sa stergeri produsul?</h3>
+<div>
+    
+    <hr />
+
+    @using (Html.BeginForm(actionName:"Delete", controllerName: "Products"))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Inapoi la produse", "Index")
+        </div>
+    }
+<div>
+    <hr />
+
+    <h1>
+        @Html.DisplayFor(model => model.Name)
+
+    </h1>
+    <p class="text-info">
+        @Html.DisplayNameFor(model => model.RegisteredOn): @Html.DisplayFor(model => model.RegisteredOn)
+
+    </p>
+    <br />
+    <div class="col-md-10">
+        <img src="~/Files/@Model.FileName" width="480" height="480" style="display:inline-block" />
+    </div>
+
+    <div class="col-md-2 text-center" style="background-color: #d3d3d387; padding-bottom: 1em; border-radius: 22px;">
+
+        <h3 style="color:darkred">
+            Pret: @Html.DisplayFor(model => model.Price) Lei
+        </h3>
+        <form method="post" action="/Orders/AdaugaInCos/@Model.ID">
+            <button class="btn btn-primary">
+                <i class="glyphicon glyphicon-shopping-cart"></i> Adauga in cos
+            </button>
+        </form>
+
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <h3>
+                Descriere
+            </h3>
+
+            <p style="font-size:1.1em">
+                @Html.DisplayFor(model => model.Description)
+            </p>
+        </div>
+    </div>
+
+
+
+</div>
+</div>

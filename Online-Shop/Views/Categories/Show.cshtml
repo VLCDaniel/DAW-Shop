@@ -1,0 +1,33 @@
+﻿@model Shopping_Site.Models.Category
+
+<br />
+<a href="/Categories">Inapoi la categorii</a>
+<br />
+
+<div class="page-header">
+    <h1>@Model.CategoryName</h1>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Model.CategoryName</div>
+    <div class="panel-body">
+        <ul>
+            @foreach (var prod in ViewBag.Produse)
+            {
+                <li>
+                    <div>
+                        <h4><a href="/Products/Show/@prod.ID">@prod.Name</a></h4>
+                        <p class="info">@prod.Description</p>
+                    </div>
+                </li>
+
+            }
+        </ul><br /><br />
+        <a class="btn btn-success pull-left" href="/Categories/Edit/@Model.CategoryId">Modifica categorie</a>
+        
+        <form method="post" action="/Categories/Delete/@Model.CategoryId">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-danger pull-right" type="submit">Sterge categorie</button>
+        </form>
+    </div>
+</div>

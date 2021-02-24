@@ -1,0 +1,200 @@
+﻿@model Shopping_Site.Models.Product
+
+@{
+    ViewBag.Title = @Model.Name;
+}
+
+<style>
+    .stars {
+        display: flex;
+    }
+
+    li > .glyphicon-star {
+        font-size: 2.2em;
+        color: rgb(160, 160, 160);
+        
+    }
+    li>.glyphicon-star-add{
+        cursor:pointer;
+    }
+
+    input[type="number"] {
+        display: none;
+    }
+
+    .control-label {
+        padding-left: 0
+    }
+</style>
+
+<h1>@TempData["Message"]</h1>
+
+
+<div>
+    <hr />
+    <a class="btn btn-primary" href='@Url.Action("Index","Products")'><i class="glyphicon glyphicon-arrow-left"></i> Inapoi la produse</a>
+    <h1>
+        @Html.DisplayFor(model => model.Name)
+
+    </h1>
+    <p class="text-info">
+        @Html.DisplayNameFor(model => model.RegisteredOn): @Html.DisplayFor(model => model.RegisteredOn)
+
+    </p>
+    <br />
+    <div class="col-md-10">
+        <img src="~/Files/@Model.FileName" width="480" height="480" style="display:inline-block" />
+    </div>
+
+
+
+    @if (ViewBag.afisareButoane == true && Model.UserID == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+    {
+        <div style="font-size:2em; float:right">
+            <a class="glyphicon glyphicon-pencil" href="/Products/Edit/@Model.ID"></a>
+
+            <form method="post" action="/Products/Delete/@Model.ID" style="display:inline-block">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+            </form>
+        </div>
+    }
+
+
+    <div class="col-md-2 text-center" style="background-color: #d3d3d387; padding-bottom: 1em; border-radius: 22px;">
+
+        <h3 style="color:darkred">
+            Pret: @Html.DisplayFor(model => model.Price) Lei
+        </h3>
+        <form method="post" action="/Orders/AdaugaInCos/@Model.ID">
+            <button class="btn btn-primary">
+                <i class="glyphicon glyphicon-shopping-cart"></i> Adauga in cos
+            </button>
+        </form>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            @if (ViewBag.rating > 0)
+            {
+                <h3>Nota @ViewBag.rating</h3>
+            }
+            <h3>
+                Descriere
+            </h3>
+
+            <p style="font-size:1.1em">
+                @Html.DisplayFor(model => model.Description)
+            </p>
+        </div>
+    </div>
+
+
+
+</div>
+
+<br />
+<br />
+<h3>Recenzii</h3>
+<ul class="list-unstyled">
+    @foreach (var review in Model.Reviews)
+    {
+
+        <li>
+            <hr />
+            <div class="row">
+                <div class="col-md-10">
+
+                    <ul class="list-unstyled stars" >
+                        @for (var i = 0; i < 5; i++)
+                        {
+                            if (i < review.Rating)
+                            {
+                                <li>
+                                    <i class="glyphicon glyphicon-star" style="color: #f9bf3b"> </i>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <i class="glyphicon glyphicon-star" style="color: rgb(160, 160, 160)"> </i>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    @*<b>@review.Rating / 5</b>*@
+                    <p class="text">@review.Comment</p>
+                    <h6 class="text-info">Data: @review.Date</h6>
+                </div>
+                @if (User.IsInRole("Admin") || ViewBag.utilizatorCurent == review.UserID)
+                {
+                    <div class="col-md-2">
+                        <div style="display: inline-block; float : left; margin-right: 15px">
+                            <a class="glyphicon glyphicon-pencil" href="/Reviews/Edit/@review.ID"></a>
+                        </div>
+                        <form method="post" action="/Reviews/Delete/@review.ID">
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                        </form>
+                    </div>
+                }
+
+            </div>
+        </li>
+    }
+</ul>
+
+<form method="post" action="/Reviews/New">
+
+    <div class="form-group">
+        <h4>Adauga un Comentariu</h4>
+        <hr />
+        <input type="hidden" name="ProductID" value="@Model.ID" />
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Rating">Rating (1-5)</label>
+            <input type="number" name="Rating" min="1" max="5" id="ratingSelector" /><br /><br />
+            <ul class="stars list-unstyled">
+                <li>
+                    <i class="glyphicon glyphicon-star glyphicon-star-add"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star glyphicon-star-add"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star glyphicon-star-add"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star glyphicon-star-add"></i>
+                </li>
+                <li>
+                    <i class="glyphicon glyphicon-star glyphicon-star-add"></i>
+                </li>
+            </ul>
+            <label class="control-label col-md-2" for="Comment">Continut comentariu</label>
+            <textarea class="form-control" name="Comment"></textarea>
+            <br />
+            <button class="btn btn-success " type="submit">Adauga comentariu</button>
+        </div>
+    </div>
+
+</form>
+<script>
+    let stars = document.getElementsByClassName("glyphicon-star-add");
+    let ratingSelector = document.getElementById("ratingSelector");
+    for (let i of stars) {
+        i.addEventListener("click", () => {
+            let indexStar = 0;
+            for (let j of stars) j.style.color = "rgb(160, 160, 160)";
+            for (let j of stars) {
+                indexStar++;
+                ratingSelector.value = indexStar;
+                j.style.color = "#f9bf3b";
+                if (j == i) {
+                    break;
+                }
+            }
+        });
+    }
+</script>
+

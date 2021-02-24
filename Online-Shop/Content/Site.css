@@ -1,0 +1,70 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap');
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #e9ebee
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: none;
+}
+
+.navbar {
+    background-color: #2c3e50;
+}
+.navbar-brand {
+    font-family: 'Hanalei Fill', cursive;
+    font-size:3em;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+
+.panel-default {
+    box-shadow: 0 1px 5px -1px rgb(0 0 0 / 13%);
+    padding-bottom: 1em;
+    transition: all 0.2s
+}
+
+    .panel-default:hover {
+        box-shadow: 0px 5px 15px -1px rgb(0 0 0 / 13%);
+    }
+
+.panel-default {
+    box-shadow: 0 1px 5px -1px rgb(0 0 0 / 13%);
+    padding-bottom: 1em;
+    transition: all 0.2s;
+    /* margin-left: 1em; */
+    /* margin-right: 1em; */
+    margin: 0 3em;
+    margin-bottom:1em;
+}
+
+.btn-primary {
+    background-color: #2c3e50;
+}
+.btn-success {
+    background-color: #27ae60;
+}
+.btn-dange {
+    background-color: #e74c3c;
+}
