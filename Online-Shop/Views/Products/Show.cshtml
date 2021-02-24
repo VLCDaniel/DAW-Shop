@@ -32,7 +32,7 @@
 
 <div>
     <hr />
-    <a class="btn btn-primary" href='@Url.Action("Index","Products")'><i class="glyphicon glyphicon-arrow-left"></i> Inapoi la produse</a>
+    <a class="btn btn-primary" href='@Url.Action("Index","Products")'><i class="glyphicon glyphicon-arrow-left"></i> Back to products</a>
     <h1>
         @Html.DisplayFor(model => model.Name)
 
@@ -43,7 +43,7 @@
     </p>
     <br />
     <div class="col-md-10">
-        <img src="~/Files/@Model.FileName" width="480" height="480" style="display:inline-block" />
+        <img src="~/Files/@Model.FileName" width="320" height="320" style="display:inline-block" />
     </div>
 
 
@@ -64,11 +64,11 @@
     <div class="col-md-2 text-center" style="background-color: #d3d3d387; padding-bottom: 1em; border-radius: 22px;">
 
         <h3 style="color:darkred">
-            Pret: @Html.DisplayFor(model => model.Price) Lei
+            Price: @Html.DisplayFor(model => model.Price) $
         </h3>
         <form method="post" action="/Orders/AdaugaInCos/@Model.ID">
             <button class="btn btn-primary">
-                <i class="glyphicon glyphicon-shopping-cart"></i> Adauga in cos
+                <i class="glyphicon glyphicon-shopping-cart"></i> Add in Shopping Cart
             </button>
         </form>
 
@@ -78,10 +78,10 @@
         <div class="col-md-10">
             @if (ViewBag.rating > 0)
             {
-                <h3>Nota @ViewBag.rating</h3>
+                <h3>Mark @ViewBag.rating</h3>
             }
             <h3>
-                Descriere
+                Description
             </h3>
 
             <p style="font-size:1.1em">
@@ -96,7 +96,7 @@
 
 <br />
 <br />
-<h3>Recenzii</h3>
+<h3>Reviews</h3>
 <ul class="list-unstyled">
     @foreach (var review in Model.Reviews)
     {
@@ -148,7 +148,8 @@
 <form method="post" action="/Reviews/New">
 
     <div class="form-group">
-        <h4>Adauga un Comentariu</h4>
+        <hr /><hr />
+        <h4>Add a Comment</h4>
         <hr />
         <input type="hidden" name="ProductID" value="@Model.ID" />
         <div class="form-group">
@@ -171,10 +172,10 @@
                     <i class="glyphicon glyphicon-star glyphicon-star-add"></i>
                 </li>
             </ul>
-            <label class="control-label col-md-2" for="Comment">Continut comentariu</label>
+            <label class="control-label col-md-2" for="Comment">Comment Content</label>
             <textarea class="form-control" name="Comment"></textarea>
             <br />
-            <button class="btn btn-success " type="submit">Adauga comentariu</button>
+            <button class="btn btn-success " type="submit">Add comment</button>
         </div>
     </div>
 

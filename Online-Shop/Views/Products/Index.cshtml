@@ -23,7 +23,7 @@
     <br />
     <p>
         @*@Html.ActionLink("Adauga Produs", "New")*@
-        <a href="Products/New"class="btn btn-success">Adauga Produs <i class="glyphicon glyphicon-plus" ></i></a>
+        <a href="Products/New"class="btn btn-success">Add Product <i class="glyphicon glyphicon-plus" ></i></a>
     </p>
 }
 
@@ -45,11 +45,11 @@
                     <!--end of col-->
                     <div class="form-check col-md-3">
                         <select class="custom-select form-control" name="filter">
-                            <option selected>Filtreaza</option>
-                            <option value="1" @(ViewBag.Selected1)>Crescator dupa pret</option>
-                            <option value="2" @(ViewBag.Selected2)>Descrescator dupa pret</option>
-                            <option value="3" @(ViewBag.Selected3)>Crescator dupa rating</option>
-                            <option value="4" @(ViewBag.Selected4)>Descrescator dupa rating</option>
+                            <option selected>Filter</option>
+                            <option value="1" @(ViewBag.Selected1)>Ascending by price</option>
+                            <option value="2" @(ViewBag.Selected2)>Descending by price</option>
+                            <option value="3" @(ViewBag.Selected3)>Ascending by rating</option>
+                            <option value="4" @(ViewBag.Selected4)>Descending by rating</option>
                         </select>
                     </div>
 
@@ -73,33 +73,33 @@
 
     @foreach (var item in ViewBag.Products)
     {
-        <div class="panel panel-default col-md-3 text-center">
-            <h3 class="" style="font-weight:bolder" alt="@item.Name">
-                @item.Name
-            </h3>
+    <div class="panel panel-default col-md-3 text-center">
+        <h3 class="" style="font-weight:bolder" alt="@item.Name">
+            @item.Name
+        </h3>
 
-            <img src="~/Files/@item.FileName" width="170" height="170" style="display:inline-block" />
-            <h4 class="center-block" style="text-align:center;color:darkred">
-                @item.Price Lei
-            </h4>
-            <h6>
-                Stoc: @item.Count
-            </h6>
+        <img src="~/Files/@item.FileName" width="170" height="170" style="display:inline-block" />
+        <h4 class="center-block" style="text-align:center;color:darkred">
+            @item.Price $
+        </h4>
+        <h6>
+            Stock: @item.Count
+        </h6>
 
-            @if (ViewBag.afisareButoane == true && item.UserID == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
-            {
-                @*<ul class="list-unstyled text-center">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Show", "Show", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </ul>*@
-                <a href='@Url.Action("Show", "Products", new { id = item.ID })' class="btn btn-default">Vizualizeaza Produs <i class="glyphicon glyphicon-arrow-right"></i></a>
-            }
-            else
-            {
-                @Html.ActionLink("Show", "Show", new { id = item.ID })
-            }
-        </div>
+        @if (ViewBag.afisareButoane == true && item.UserID == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+        {
+            @*<ul class="list-unstyled text-center">
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Show", "Show", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </ul>*@
+            <a href='@Url.Action("Show", "Products", new { id = item.ID })' class="btn btn-default">Show Product <i class="glyphicon glyphicon-arrow-right"></i></a>
+        }
+        else
+        {
+            <a href='@Url.Action("Show", "Products", new { id = item.ID })' class="btn btn-default">Show Product <i class="glyphicon glyphicon-arrow-right"></i></a>
+        }
+    </div>
         @*<div class="col-md-1">
         </div>*@
     }

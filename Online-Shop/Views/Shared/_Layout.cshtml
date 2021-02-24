@@ -30,11 +30,11 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
-                        <li>@Html.ActionLink("Valideaza Produse", "Valideaza", "Products")</li>
+                        <li>@Html.ActionLink("Validate Products", "Valideaza", "Products")</li>
                         <li>@Html.ActionLink("Manage Users", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Comenzile Mele", "allOrders", "Orders")</li>
+                        <li>@Html.ActionLink("My Orders", "allOrders", "Orders")</li>
                     }
-                    <li>@Html.ActionLink("Cosul meu", "Index", "Orders")</li>
+                    <li>@Html.ActionLink("Shopping Cart", "Index", "Orders")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

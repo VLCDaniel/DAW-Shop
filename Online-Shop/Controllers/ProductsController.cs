@@ -115,7 +115,7 @@ namespace Shopping_Site.Controllers
 
             ViewBag.total = totalProducts;
             ViewBag.lastPage = Math.Ceiling((float)totalProducts / (float)this._perPage);
-            ViewBag.Products = paginatedProducts.Where(p => p.IsApproved);
+            ViewBag.Products = paginatedProducts;
 
             if (TempData.ContainsKey("message"))
             {
@@ -272,7 +272,7 @@ namespace Shopping_Site.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return View();
             }
